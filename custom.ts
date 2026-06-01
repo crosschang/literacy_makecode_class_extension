@@ -386,3 +386,66 @@ namespace classification {
     }
 
 }
+
+enum RoomNumber {
+    //% block="1번"
+    One = 1,
+    //% block="2번"
+    Two = 2,
+    //% block="3번"
+    Three = 3,
+    //% block="4번"
+    Four = 4,
+    //% block="5번"
+    Five = 5,
+    //% block="6번"
+    Six = 5
+}
+
+enum Roomtype {
+    //% block="수업"
+    Class = 1,
+    //% block="시험"
+    Examination = 2
+}
+
+/**
+ * Custom blocks
+ */
+//% weight=100 color=#0fbc11 icon="\uf0ad" block="교사용 컨트롤 시스탬"
+namespace custom {
+    let class_number = ""
+    //%blockId=task block="어떤 작업을 시행 하실건가요? "
+    export function task(handler: () => void): void {
+        handler()
+    }
+    /**
+    * 맵의 동작을 초기화 합니다.
+    */
+    //%blockId=initialization block="초기화"
+    export function initialization(): void {
+        player.execute("function admin/I")
+    }
+    /**
+    * 맵의 모든 것들을 초기화 합니다./r/n
+    * (맵에 심각한 문제가 발생시에만 시행)
+    */
+    //%blockId=factory_initialization block="공장 초기화"
+    export function factory_initialization(): void {
+        player.execute("function admin/FI")
+    }
+    /**
+     * 특정방의 문을 개방합니다.
+     */
+    //%handlerStatement=0
+    //%blockId=opendoor_class block="$n째 날 $r방 개방"
+    export function opendoor_class(n: RoomNumber, r: Roomtype): void {
+        if ((n == 1 && r != 2) || (n == 6 && r != 1)){
+            let s = "day" + n + (r == Roomtype.Class ? "_class" : "_examination")
+            player.execute("tag " + "@s" + "[tag=map_admin] " + "add " + s)
+            player.execute("tag " + "@s" + " [tag=map_admin] " + "add " + "door_open")
+        }else{
+            player.say('§e이런! 해당 방은 존재하지 않습니다!')
+        }
+    }
+}
