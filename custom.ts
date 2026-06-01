@@ -413,10 +413,11 @@ enum Roomtype {
  * Custom blocks
  */
 //% weight=100 color=#0fbc11 icon="\uf0ad" block="교사용 컨트롤 시스탬"
-namespace custom {
+namespace mapadmin {
     let class_number = ""
     //%blockId=task block="어떤 작업을 시행 하실건가요? "
     export function task(handler: () => void): void {
+        player.execute("tag " + "@s" + "[tag=!map_admin] "+"add "+"map_admin")
         handler()
     }
     /**
@@ -443,7 +444,7 @@ namespace custom {
         if ((n == 1 && r != 2) || (n == 6 && r != 1)){
             let s = "day" + n + (r == Roomtype.Class ? "_class" : "_examination")
             player.execute("tag " + "@s" + "[tag=map_admin] " + "add " + s)
-            player.execute("tag " + "@s" + " [tag=map_admin] " + "add " + "door_open")
+            player.execute("tag " + "@s" + "[tag=map_admin] " + "add " + "door_open")
         }else{
             player.say('§e이런! 해당 방은 존재하지 않습니다!')
         }
