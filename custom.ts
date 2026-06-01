@@ -412,7 +412,7 @@ enum Roomtype {
 /**
  * Custom blocks
  */
-//% weight=100 color=#0fbc11 icon="\uf0ad" block="교사용 컨트롤 시스탬"
+//% weight=100 color=#455A64 icon="\uf0ad" block="교사용 컨트롤 시스탬"
 namespace mapadmin {
     let class_number = ""
     //%blockId=task block="어떤 작업을 시행 하실건가요? "
@@ -441,7 +441,7 @@ namespace mapadmin {
     //%handlerStatement=0
     //%blockId=opendoor_class block="$n째 날 $r방 개방"
     export function opendoor_class(n: RoomNumber, r: Roomtype): void {
-        if ((n == 1 && r != 2) || (n == 6 && r != 1)){
+        if ((!((n == 1 && r == 2) || (n == 6 && r == 1)))){
             let s = "day" + n + (r == Roomtype.Class ? "_class" : "_examination")
             player.execute("tag " + "@s" + "[tag=map_admin] " + "add " + s)
             player.execute("tag " + "@s" + "[tag=map_admin] " + "add " + "door_open")
