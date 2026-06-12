@@ -420,6 +420,23 @@ enum PlayerNumber {
     Fifteen = 15,
 }
 
+enum BuildRoomNumber {
+    //% block="2번"
+    Two = 2,
+    //% block="3번"
+    Three = 3,
+    //% block="4번"
+    Four = 4,
+    //% block="5번"
+    Five = 5,
+    //% block="6번"
+    Six = 6,
+    //% block="7번"
+    Seven = 7,
+    //% block="8번"
+    Eight = 8,
+}
+
 enum RoomNumber {
     //% block="1번"
     One = 1,
@@ -469,7 +486,7 @@ namespace mapadmin {
         player.execute("function admin/FI")
     }
     /**
-     * 특정방의 문을 개방합니다.
+     * 특정날의 특정방문을 개방합니다.
      */
     //%handlerStatement=0
     //%blockId=opendoor_class block="$n째 날 $r방 개방"
@@ -483,11 +500,15 @@ namespace mapadmin {
         }
     }
     /**
-     * 특정방의 수업을 작동시킵니다.
+     * 특정날의 수업방을 작동시킵니다.
      */
     //%blockId=start_class block="$n째 날 수업 진행"
     export function start_class(n: RoomNumber): void {
-        player.execute("function environment/enter_examinations/"+n)
+        if(n != 1){
+            player.execute("function environment/enter_examinations/" + n)
+        }else{
+            player.say('§e첫번째 날 수업은 이미 동작되어있습니다!')
+        }    
     }
     /**
      * 특정 학생의 수업을 종료시킵니다.
@@ -495,5 +516,23 @@ namespace mapadmin {
     //%blockId=end_class block="$p학생의 수업 종료"
     export function end_class(p: PlayerNumber): void {
         player.execute("execute " + "@a" + "[tag=examination_" + p + "] ~ ~ ~ " +"function environment/exit_examination")
+    }
+    /**
+     * 특정날의 건축 수업을 시작합니다.
+     */
+    //%blockId=start_build_class block="$n째 날 건축 수업 진행"
+    export function start_build_class(n: BuildRoomNumber): void {
+        if (n != 6) {
+            player.execute("function environment/start_build_class/" + n)
+        } else {
+            player.say('§e이런! 해당 방은 존재하지 않습니다!')
+        }
+    }
+    /**
+     * 건축 수업을 종료시킵니다.
+     */
+    //%blockId=end_build_class block="건축 수업 종료"
+    export function end_build_class(): void {
+        player.execute("function environment/end_build_class")
     }
 }
