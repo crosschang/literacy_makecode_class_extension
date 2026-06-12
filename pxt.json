@@ -1,6 +1,6 @@
 {
     "name": "literacy_makecode_class_extension",
-    "version": "0.1.4",
+    "version": "0.1.6",
     "description": "",
     "dependencies": {
         "core": "*",
