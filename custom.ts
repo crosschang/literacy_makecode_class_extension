@@ -387,6 +387,39 @@ namespace classification {
 
 }
 
+enum PlayerNumber {
+    //% block="1번"
+    One = 1,
+    //% block="2번"
+    Two = 2,
+    //% block="3번"
+    Three = 3,
+    //% block="4번"
+    Four = 4,
+    //% block="5번"
+    Five = 5,
+    //% block="6번"
+    Six = 6,
+    //% block="7번"
+    Seven = 7,
+    //% block="8번"
+    Eight = 8,
+    //% block="9번"
+    Nine = 9,
+    //% block="10번"
+    Ten = 10,
+    //% block="11번"
+    Eleven = 11,
+    //% block="12번"
+    Twelve = 12,
+    //% block="13번"
+    Thirteenth = 13,
+    //% block="14번"
+    Fourteen = 14,
+    //% block="15번"
+    Fifteen = 15,
+}
+
 enum RoomNumber {
     //% block="1번"
     One = 1,
@@ -399,7 +432,7 @@ enum RoomNumber {
     //% block="5번"
     Five = 5,
     //% block="6번"
-    Six = 5
+    Six = 6
 }
 
 enum Roomtype {
@@ -448,5 +481,19 @@ namespace mapadmin {
         }else{
             player.say('§e이런! 해당 방은 존재하지 않습니다!')
         }
+    }
+    /**
+     * 특정방의 수업을 작동시킵니다.
+     */
+    //%blockId=start_class block="$n째 날 수업 진행"
+    export function start_class(n: RoomNumber): void {
+        player.execute("function environment/enter_examinations/"+n)
+    }
+    /**
+     * 특정 학생의 수업을 종료시킵니다.
+     */
+    //%blockId=end_class block="$p학생의 수업 종료"
+    export function end_class(p: PlayerNumber): void {
+        player.execute("execute " + "@a" + "[tag=examination_" + p + "] ~ ~ ~ " +"function environment/exit_examination")
     }
 }
